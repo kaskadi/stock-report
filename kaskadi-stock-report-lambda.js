@@ -13,7 +13,7 @@ module.exports.handler = async (event) => {
   const productsData = await getProductsData(prods.products)
   const params = {
     Message: buildMsg(productsData),
-    Subject: 'Weekly stock update',
+    Subject: 'Weekly stock report',
     TopicArn: process.env.TOPIC_ARN
   }
   await sns.publish(params).promise()

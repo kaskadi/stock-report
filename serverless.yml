@@ -19,7 +19,7 @@ provider:
     - Effect: Allow
       Action:
         - sns:Publish
-      Resource: !Ref KaskadiWeeklyStockReport
+      Resource: !Ref KaskadiStockReporter
 
 functions:
   KaskadiStockReport:
@@ -33,7 +33,7 @@ functions:
         - 'kaskadi-stock-report-lambda.js'
         - 'node_modules/**'
     environment:
-      TOPIC_ARN: !Ref KaskadiWeeklyStockReport
+      TOPIC_ARN: !Ref KaskadiStockReporter
       WEMALO_TOKEN: ${env:WEMALO_TOKEN}
       ES_ID: ${env:ES_ID}
       ES_SECRET: ${env:ES_SECRET}
@@ -45,11 +45,11 @@ functions:
 
 resources:
   Resources:
-    KaskadiWeeklyStockReport:
+    KaskadiStockReporter:
       Type: AWS::SNS::Topic
       Properties:
-        TopicName: KaskadiWeeklyStockReport
-        DisplayName: Weekly stock update
+        TopicName: KaskadiStockReporter
+        DisplayName: Klimapartner's stock autoreporter
         Subscription:
           - Endpoint: "a.lemaire@klimapartner.de"
             Protocol: email
