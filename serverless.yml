@@ -1,5 +1,3 @@
-# ATTENTION: when done with setting up this file, you can go into .github/workflows/deploy.yml to use the 'deploy -v' command for this action in order to deploy your lambda
-
 service:
   name: kaskadi-stock-report-lambda
 
@@ -17,10 +15,11 @@ provider:
   deploymentBucket:
     name: ${env:SLS_DEPLOY_BUCKET}
   deploymentPrefix: ${self:service.name}
-  # uncomment the following if you need to link to an API. Replace with the proper exported value from your API
-  # apiGateway:
-  #   restApiId: !ImportValue RestAPIGatewayId
-  #   restApiRootResourceId: !ImportValue RestAPIGatewayRootResourceId
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - sns:Publish
+      Resource: !Ref KaskadiWeeklyStockReport
 
 functions:
   KaskadiStockReport:
@@ -30,9 +29,15 @@ functions:
       include:
         - 'kaskadi-stock-report-lambda.js'
         - 'node_modules/**'
-    # configure here the proper event(s) that should trigger your lambda
+    environment:
+      TOPIC_ARN: !Ref KaskadiWeeklyStockReport
     events:
-      - http:
-          method: get
-          path: hello
-          cors: true
+      - schedule: rate(1 minute)
+
+resources:
+  Resources:
+    WeeklyTimer:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: KaskadiWeeklyStockReport
+        DisplayName: Weekly stock update
