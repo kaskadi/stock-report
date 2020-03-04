@@ -7,7 +7,8 @@ module.exports.handler = async (event) => {
   const prods = await client.getAllProducts()
   let productsData = []
   for (const product of prods.products) {
-    const productInfo = await Promise.all([client.getStockReduced(product.externalId, true)]) // TODO: query ES in parallel to get buying price
+    const productInfo = await Promise.all([client.getStockReduced(product.externalId, false)]) // TODO: query ES in parallel to get buying price
+    console.log(productInfo)
     productsData.push({
       id: product.externalId,
       sku: product.sku,
@@ -18,13 +19,11 @@ module.exports.handler = async (event) => {
   }
   let msg = ''
   productsData.forEach(productData => {
-    msg += `<div>
-  <div>ID: ${productData.id}</div>
-  <div>SKU: ${productData.sku}</div>
-  <div>EAN: ${productData.ean}</div>
-  <div>Quantity: ${productData.quantity}</div>
-  <div>Not reserved quantity: ${productData.notReservedQuantity}</div>
-</div>
+    msg += `ID: ${productData.id}
+SKU: ${productData.sku}
+EAN: ${productData.ean}
+Quantity: ${productData.quantity || 'N/A'}
+Not reserved quantity: ${productData.notReservedQuantity || 'N/A'}
 `
   })
   const params = {
