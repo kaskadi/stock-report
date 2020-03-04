@@ -32,7 +32,7 @@ functions:
     environment:
       TOPIC_ARN: !Ref KaskadiWeeklyStockReport
     events:
-      - schedule: rate(1 minute)
+      - schedule: rate(5 minutes)
 
 resources:
   Resources:
