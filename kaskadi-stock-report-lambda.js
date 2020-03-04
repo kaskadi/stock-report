@@ -65,9 +65,9 @@ async function buildStocks(productData) {
   const warehouses = await listWarehouses()
   return warehouses.hits.hits.map(warehouse => {
     return {
-      warehouse: warehouse.name,
+      warehouse: warehouse._source.name,
       state: '',
-      ...productData[`${warehouse.name}_data`]
+      ...productData[`${warehouse._source.name}_data`]
     }
   })
 }
