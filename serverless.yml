@@ -39,7 +39,9 @@ functions:
       ES_SECRET: ${env:ES_SECRET}
       ES_ENDPOINT: ${env:ES_ENDPOINT}
     events:
-      - schedule: cron(0 7 * * 1) # runs every monday at 7AM
+      - schedule:
+          rate: cron(0 7 * * ? 1) # runs every monday at 7AM
+          enabled: true
 
 resources:
   Resources:
