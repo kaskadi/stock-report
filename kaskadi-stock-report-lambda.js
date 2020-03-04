@@ -10,44 +10,74 @@ const es = require('aws-es-client')({
 
 module.exports.handler = async (event) => {
   const prods = await client.getAllProducts()
-  let productsData = []
-  for (const product of prods.products) {
-    const productInfo = await Promise.all([
-      client.getStockReduced(product.externalId, true),
-      es.get({
-        id: product.externalId,
-        index: 'products'
-      })
-    ])
-    productsData.push({
-      id: product.externalId,
-      sku: product.sku,
-      ean: product.ean,
-      name: productInfo[1].name,
-      buyingPrice: productInfo[1].buyingPrice,
-      quantity: productInfo[0].quantity,
-      quantityReserved: productInfo[0].quantityReserved
-    })
+  const productsData = await getProductsData(prods.products)
+  const params = {
+    Message: buildMsg(productsData),
+    Subject: 'Weekly stock update',
+    TopicArn: process.env.TOPIC_ARN
   }
-  let msg = ''
-  productsData.forEach(productData => {
-    msg += `${productData.name}
+  await sns.publish(params).promise()
+}
 
-ID: ${productData.id}
-SKU: ${productData.sku}
-EAN: ${productData.ean}
-Buying price: ${productData.buyingPrice || 'N/A'}
-Quantity: ${productData.quantity || '0'}
-Reserved quantity: ${productData.quantityReserved || '0'}
+async function getProductsData(products) {
+  let productsData = []
+  for (const product of products) {
+    const id = product.externalId
+    const productExistsDB = await productExists(id)
+    if (productExistsDB) {
+      const productInfo = await Promise.all([getYSWSInfo(id), getDBInfo(id)])
+      productsData.push({
+        id: product.externalId,
+        sku: product.sku,
+        ean: product.ean,
+        ...productInfo[1],
+        ...productInfo[0]
+      })
+    }
+  }
+  return productsData
+}
+
+async function productExists(id) {
+  return await es.exists({
+    id: id,
+    index: 'products'
+  })
+}
+
+async function getYSWSInfo(id) {
+  const data = client.getStockReduced(id, true)
+  return {
+    quantity: data.quantity,
+    quantityReserved: data.quantityReserved
+  }
+}
+
+async function getDBInfo(id) {
+  const data = await es.get({
+    id,
+    index: 'products'
+  })
+  return {
+    name: data.name,
+    buyingPrice: data.buyingPrice
+  }
+}
+
+function buildMsg(dataCollection) {
+  const msgs = dataCollection.map(data => {
+    return `${data.name}
+
+ID: ${data.id}
+SKU: ${data.sku}
+EAN: ${data.ean}
+Buying price: ${data.buyingPrice || 'N/A'}
+Quantity: ${data.quantity || '0'}
+Reserved quantity: ${data.quantityReserved || '0'}
 
 -----------------
 
 `
   })
-  const params = {
-    Message: msg,
-    Subject: 'Weekly stock update',
-    TopicArn: process.env.TOPIC_ARN
-  }
-  await sns.publish(params).promise()
+  return msgs.join('')
 }
