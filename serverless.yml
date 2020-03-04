@@ -35,6 +35,9 @@ functions:
     environment:
       TOPIC_ARN: !Ref KaskadiWeeklyStockReport
       WEMALO_TOKEN: ${env:WEMALO_TOKEN}
+      ES_ID: ${env:ES_ID}
+      ES_SECRET: ${env:ES_SECRET}
+      ES_ENDPOINT: ${env:ES_ENDPOINT}
     events:
       - schedule: rate(60 minutes)
 
