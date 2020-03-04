@@ -5,6 +5,7 @@ const client = new WemaloClient({token: process.env.WEMALO_TOKEN})
 
 module.exports.handler = async (event) => {
   const prods = await client.getAllProducts()
+  console.log(prods)
   const params = {
     Message: JSON.stringify(prods),
     Subject: 'Test publish from Lambda',
