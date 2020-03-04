@@ -65,19 +65,16 @@ async function getDBInfo(id) {
 }
 
 function buildMsg(dataCollection) {
-  const msgs = dataCollection.map(data => {
-    return `${data.name}
+  const msgs = dataCollection.map(data => `${data.name}
 
 ID: ${data.id}
 SKU: ${data.sku}
 EAN: ${data.ean}
-Buying price: ${data.buyingPrice || 'N/A'}
+Buying price: ${data.buyingPrice || 'No information'}
 Quantity: ${data.quantity || '0'}
 Reserved quantity: ${data.quantityReserved || '0'}
 
------------------
-
-`
-  })
-  return msgs.join('')
+-----------------`
+  )
+  return msgs.join('\n\n')
 }
