@@ -39,10 +39,11 @@ async function getProductsData(products) {
 }
 
 async function productExists(id) {
-  return await es.exists({
+  const data = (await es.exists({
     id: id,
     index: 'products'
-  })
+  })).split(' ')
+  return JSON.parse(data[data.length - 1])
 }
 
 async function getYSWSInfo(id) {
