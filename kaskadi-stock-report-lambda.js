@@ -11,6 +11,7 @@ const es = require('aws-es-client')({
 module.exports.handler = async (event) => {
   const prods = await client.getAllProducts()
   const productsData = await getProductsData(prods.products)
+  await updateStocksDB(productsData)
   const params = {
     Message: buildMsg(productsData),
     Subject: 'Weekly stock report',
@@ -45,6 +46,25 @@ async function productExists(id) {
   })
 }
 
+async function updateStocksDB(productsData) {
+  for (const productData of productsData) {
+    const stocks = [{
+      warehouse: 'ysws',
+      state: '',
+      ...productData.yswsData
+    }]
+    await es.update({
+      id: productData.id,
+      index: 'products',
+      body: {
+        doc: {
+          stocks
+        }
+      }
+    })
+  }
+}
+
 async function getYSWSInfo(id) {
   const data = await client.getStockReduced(id, true)
   return {
@@ -67,12 +87,13 @@ async function getDBInfo(id) {
 function buildMsg(dataCollection) {
   const msgs = dataCollection.map(data => `${data.dbData.name}
 
-ID: ${data.id}
-SKU: ${data.sku}
-EAN: ${data.ean}
-Buying price: ${data.dbData.buyingPrice || 'no information'}
+Product data:
+  ID: ${data.id}
+  SKU: ${data.sku}
+  EAN: ${data.ean}
+  Buying price: ${data.dbData.buyingPrice || 'no information'}
 
-YouSellWeSend data:
+YouSellWeSend stocks:
   Quantity: ${data.yswsData.quantity || '0'}
   Reserved quantity: ${data.yswsData.quantityReserved || '0'}
 
