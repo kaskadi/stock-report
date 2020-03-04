@@ -31,8 +31,8 @@ async function getProductsData(products) {
         id: product.externalId,
         sku: product.sku,
         ean: product.ean,
-        dbData: productInfo[1],
-        yswsData: productInfo[0]
+        db_data: productInfo[1],
+        ysws_data: productInfo[0]
       })
     }
   }
@@ -48,11 +48,7 @@ async function productExists(id) {
 
 async function updateStocksDB(productsData) {
   for (const productData of productsData) {
-    const stocks = [{
-      warehouse: 'ysws',
-      state: '',
-      ...productData.yswsData
-    }]
+    const stocks = await buildStocks(productData)
     await es.update({
       id: productData.id,
       index: 'products',
@@ -65,11 +61,35 @@ async function updateStocksDB(productsData) {
   }
 }
 
+async function buildStocks(productData) {
+  const warehouses = await listWarehouses()
+  return warehouses.hits.hits.map(warehouse => {
+    return {
+      warehouse: warehouse.name,
+      state: '',
+      ...productData[`${warehouse.name}_data`]
+    }
+  })
+}
+
+async function listWarehouses() {
+  return await es.search({
+    index: 'warehouses',
+    body: {
+      from: 0,
+      size: 500,
+      query: {
+        match_all: {}
+      }
+    }
+  })
+}
+
 async function getYSWSInfo(id) {
   const data = await client.getStockReduced(id, true)
   return {
-    quantity: data.quantity,
-    quantityReserved: data.quantityReserved
+    quantity: data.quantity || 0,
+    quantityReserved: data.quantityReserved || 0
   }
 }
 
@@ -85,17 +105,17 @@ async function getDBInfo(id) {
 }
 
 function buildMsg(dataCollection) {
-  const msgs = dataCollection.map(data => `${data.dbData.name}
+  const msgs = dataCollection.map(data => `${data.db_data.name}
 
 Product data:
   ID: ${data.id}
   SKU: ${data.sku}
   EAN: ${data.ean}
-  Buying price: ${data.dbData.buyingPrice || 'no information'}
+  Buying price: ${data.db_data.buyingPrice || 'no information'}
 
 YouSellWeSend stocks:
-  Quantity: ${data.yswsData.quantity || '0'}
-  Reserved quantity: ${data.yswsData.quantityReserved || '0'}
+  Quantity: ${data.ysws_data.quantity}
+  Reserved quantity: ${data.ysws_data.quantityReserved}
 
 -----------------`
   )
