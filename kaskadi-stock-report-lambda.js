@@ -39,15 +39,14 @@ async function getProductsData(products) {
 }
 
 async function productExists(id) {
-  const data = (await es.exists({
-    id: id,
+  return await es.exists({
+    id,
     index: 'products'
-  })).split(' ')
-  return JSON.parse(data[data.length - 1])
+  })
 }
 
 async function getYSWSInfo(id) {
-  const data = client.getStockReduced(id, true)
+  const data = await client.getStockReduced(id, true)
   return {
     quantity: data.quantity,
     quantityReserved: data.quantityReserved
@@ -60,8 +59,8 @@ async function getDBInfo(id) {
     index: 'products'
   })
   return {
-    name: data.name,
-    buyingPrice: data.buyingPrice
+    name: data._source.name,
+    buyingPrice: data._source.buyingPrice
   }
 }
 
