@@ -30,8 +30,8 @@ async function getProductsData(products) {
         id: product.externalId,
         sku: product.sku,
         ean: product.ean,
-        ...productInfo[1],
-        ...productInfo[0]
+        dbData: productInfo[1],
+        yswsData: productInfo[0]
       })
     }
   }
@@ -65,14 +65,16 @@ async function getDBInfo(id) {
 }
 
 function buildMsg(dataCollection) {
-  const msgs = dataCollection.map(data => `${data.name}
+  const msgs = dataCollection.map(data => `${data.dbData.name}
 
 ID: ${data.id}
 SKU: ${data.sku}
 EAN: ${data.ean}
-Buying price: ${data.buyingPrice || 'No information'}
-Quantity: ${data.quantity || '0'}
-Reserved quantity: ${data.quantityReserved || '0'}
+Buying price: ${data.dbData.buyingPrice || 'no information'}
+
+YouSellWeSend data:
+  Quantity: ${data.yswsData.quantity || '0'}
+  Reserved quantity: ${data.yswsData.quantityReserved || '0'}
 
 -----------------`
   )
