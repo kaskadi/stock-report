@@ -25,12 +25,16 @@ functions:
   KaskadiStockReport:
     handler: kaskadi-stock-report-lambda.handler
     name: ${self:service.name}
+    layers:
+      - !ImportValue KaskadiEsLayerArn
+      - !ImportValue KaskadiWemaloLayerArn
     package:
       include:
         - 'kaskadi-stock-report-lambda.js'
         - 'node_modules/**'
     environment:
       TOPIC_ARN: !Ref KaskadiWeeklyStockReport
+      WEMALO_TOKEN: ${env:WEMALO_TOKEN}
     events:
       - schedule: rate(60 minutes)
 
