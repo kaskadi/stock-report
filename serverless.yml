@@ -53,3 +53,5 @@ resources:
         Subscription:
           - Endpoint: "a.lemaire@klimapartner.de"
             Protocol: email
+          - Endpoint: "j.will@klimapartner.de"
+            Protocol: email
