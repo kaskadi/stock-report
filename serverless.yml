@@ -31,6 +31,7 @@ functions:
     package:
       include:
         - 'kaskadi-stock-report-lambda.js'
+        - 'helpers/**'
         - 'node_modules/**'
     environment:
       TOPIC_ARN: !Ref KaskadiStockReporter
