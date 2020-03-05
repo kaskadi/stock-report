@@ -1,5 +1,7 @@
 const AWS = require('aws-sdk')
 const sns = new AWS.SNS({apiVersion: '2010-03-31'})
+const WemaloClient = require('wemalo-api-wrapper')
+const client = new WemaloClient({token: process.env.WEMALO_TOKEN})
 const buildMsg = require('./helpers/build-msg.js')
 const getProductsData = require('./helpers/get-products-data.js')
 const updateStocksDB = require('./helpers/update-stocks-db.js')
