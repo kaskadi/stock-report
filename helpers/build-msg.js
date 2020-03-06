@@ -17,6 +17,10 @@ function getProductData(data) {
 }
 
 function getStocks(stocks) {
-  return Object.entries(stocks).map(entry => `${entry[0]} stocks:
+  const warehouseNamesMap = {
+    ysws: 'YouSellWeSend',
+    amz_de: 'Amazon.de'
+  }
+  return Object.entries(stocks).map(entry => `${warehouseNamesMap[entry[0]]} stocks:
   Quantity: ${entry[1].amount}`).join('\n\n')
 }
