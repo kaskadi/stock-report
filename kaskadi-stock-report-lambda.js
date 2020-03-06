@@ -5,15 +5,10 @@ const buildMsg = require('./helpers/build-msg.js')
 
 module.exports.handler = async (event) => {
   const dbData = await searchAllProducts()
-  // const params = {
-  //   Message: buildMsg(productsData),
-  //   Subject: 'Weekly stock report',
-  //   TopicArn: process.env.TOPIC_ARN
-  // }
   const params = {
     Message: buildMsg(dbData),
     Subject: 'Weekly stock report',
-    TopicArn: process.env.TEST_TOPIC_ARN
+    TopicArn: process.env.TOPIC_ARN
   }
   await sns.publish(params).promise()
 }
