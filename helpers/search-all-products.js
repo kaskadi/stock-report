@@ -13,7 +13,19 @@ module.exports = async () => {
     from += size
     dbData = dbData.concat((await searchProducts(from, size)).hits.hits)
   }
-  return dbData
+  return dbData.sort(sortingFunction)
+}
+
+function sortingFunction(a, b) {
+  const nameA = a._source.name.toUpperCase()
+  const nameB = b._source.name.toUpperCase()
+  if (nameA < nameB) {
+    return -1
+  }
+  if (nameA > nameB) {
+    return 1
+  }
+  return 0
 }
 
 async function searchProducts(from, size) {
