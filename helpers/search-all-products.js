@@ -20,9 +20,11 @@ async function searchProducts(from, size) {
   return await es.search({
     from,
     size,
-    query: {
-      exists: {
-        field: 'stocks'
+    body: {
+      query: {
+        exists: {
+          field: 'stocks'
+        }
       }
     }
   })
