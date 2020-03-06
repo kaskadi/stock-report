@@ -20,6 +20,10 @@ provider:
       Action:
         - sns:Publish
       Resource: !Ref KaskadiStockReporter
+    - Effect: Allow
+      Action:
+        - sns:Publish
+      Resource: !Ref TestKaskadiStockReporter
 
 functions:
   KaskadiStockReport:
@@ -27,7 +31,6 @@ functions:
     name: ${self:service.name}
     layers:
       - !ImportValue KaskadiEsLayerArn
-      - !ImportValue KaskadiWemaloLayerArn
     package:
       include:
         - 'kaskadi-stock-report-lambda.js'
@@ -35,7 +38,7 @@ functions:
         - 'node_modules/**'
     environment:
       TOPIC_ARN: !Ref KaskadiStockReporter
-      WEMALO_TOKEN: ${env:WEMALO_TOKEN}
+      TEST_TOPIC_ARN: !Ref TestKaskadiStockReporter
       ES_ID: ${env:ES_ID}
       ES_SECRET: ${env:ES_SECRET}
       ES_ENDPOINT: ${env:ES_ENDPOINT}
@@ -55,4 +58,13 @@ resources:
           - Endpoint: "a.lemaire@klimapartner.de"
             Protocol: email
           - Endpoint: "j.will@klimapartner.de"
+            Protocol: email
+    # test topic
+    TestKaskadiStockReporter:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: TestKaskadiStockReporter
+        DisplayName: Test Klimapartner's stock autoreporter
+        Subscription:
+          - Endpoint: "a.lemaire@klimapartner.de"
             Protocol: email

@@ -1,17 +1,22 @@
-module.exports = (dataCollection) => {
-  const msgs = dataCollection.map(data => `${data.db_data.name}
+module.exports = (dbData) => {
+  return dbData.map(data => `${getProductData(data)}
+
+${getStocks(data._source.stocks)}
+
+-----------------`).join('\n\n')
+}
+
+function getProductData(data) => {
+  return `${data._source.name}
 
 Product data:
-  ID: ${data.id}
-  SKU: ${data.sku}
-  EAN: ${data.ean}
-  Buying price: ${data.db_data.buyingPrice || 'no information'}
+  ID: ${data._id}
+  SKU: ${data._source.sku}
+  EAN: ${data._source.ean}
+  Buying price: ${data._source.buyingPrice || 'no information'}`
+}
 
-YouSellWeSend stocks:
-  Quantity: ${data.ysws_data.quantity}
-  Reserved quantity: ${data.ysws_data.quantityReserved}
-
------------------`
-  )
-  return msgs.join('\n\n')
+function getStocks(stocks) => {
+  return Object.entries(stocks).map(entry => `${entry[0]} stocks:
+  Quantity: ${entry[1].amount}`).join('\n\n')
 }
