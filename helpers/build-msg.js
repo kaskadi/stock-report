@@ -13,7 +13,7 @@ function getProductData(data) {
   ID: ${data._id}
   SKU: ${data._source.sku}
   EAN: ${data._source.ean}
-  Buying price: ${data._source.buyingPrice || 'no information'}`
+  Buying price: ${`${data._source.purchasePrice}€` || 'no information'}`
 }
 
 function getStocks(stocks) {
