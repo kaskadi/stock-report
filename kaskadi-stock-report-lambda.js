@@ -1,5 +1,5 @@
 const searchAllProducts = require('./helpers/search-all-products.js')
-const buildMsg = require('build-msg.js')
+const buildMsg = require('./helpers/build-msg.js')
 
 const sendmail = require('sendmail')({silent: true})
 
