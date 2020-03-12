@@ -6,6 +6,7 @@ module.exports = (opts) => {
       console.log(reply)
       if (err !== null) {
         console.log(err && err.stack)
+        reject()
       }
       resolve()
     })
