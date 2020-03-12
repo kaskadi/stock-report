@@ -16,9 +16,9 @@ provider:
   deploymentBucket:
     name: kaskadi-serverless-deployment-bucket
   tags:
-    app: kaskadi,
-    service: ${self:service.name},
-    logical-unit: stocks,
+    app: kaskadi
+    service: ${self:service.name}
+    logical-unit: stocks
     type: schedule
 
 functions:
