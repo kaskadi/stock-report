@@ -5,7 +5,7 @@
   "main": "serverless.yml",
   "scripts": {
     "test": "echo \"No test script defined.\"",
-    "install-layer": "cd layer/nodejs && npm i && cd ../../"
+    "preinstall": "./tools/install.sh"
   },
   "repository": {
     "type": "git",
