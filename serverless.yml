@@ -29,7 +29,6 @@ functions:
     package:
       include:
         - 'kaskadi-stock-report-lambda.js'
-        - 'helpers/**'
         - 'node_modules/**'
     environment:
       ES_ID: ${env:ES_ID}
