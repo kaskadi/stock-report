@@ -1,4 +1,4 @@
-const searchAllProducts = require('search-all-products.js')
+const searchAllProducts = require('./helpers/search-all-products.js')
 const buildMsg = require('build-msg.js')
 
 const sendmail = require('sendmail')({silent: true})
