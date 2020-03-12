@@ -4,7 +4,8 @@ service:
 package:
   individually: true
   exclude:
-    - "**/**"
+    - '.*/**'
+    - '*'
 
 provider:
   name: aws
@@ -29,7 +30,6 @@ functions:
     package:
       include:
         - 'kaskadi-stock-report-lambda.js'
-        - 'node_modules/**'
     environment:
       ES_ID: ${env:ES_ID}
       ES_SECRET: ${env:ES_SECRET}
