@@ -1,11 +1,8 @@
 module.exports = (dbData) => {
   return dbData.map(data => `<h1>${data._source.name}</h1>
-
-<div>${getProductData(data)}</div>
-
-<div>${getStocks(data._source.stocks)}</div>
-
-<hr>`).join('\n\n')
+<div style="padding: 10px 0 5px 0">${getProductData(data)}</div>
+<div style="padding: 5px 0 10px 0">${getStocks(data._source.stocks)}</div>
+<hr>`)
 }
 
 function getProductData(data) {
@@ -22,5 +19,5 @@ function getStocks(stocks) {
     amz_de: 'Amazon.de'
   }
   return Object.entries(stocks).map(entry => `<div style="font-weight: bold;">${warehouseNamesMap[entry[0]]} stocks:</div>
-<div>Quantity: ${entry[1].amount}</div>`).join('\n\n')
+<div>Quantity: ${entry[1].amount}</div>`)
 }
