@@ -13,5 +13,3 @@ module.exports.handler = async (event) => {
     html: buildMsg(dbData)
   })
 }
-
-// force
