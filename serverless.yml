@@ -30,11 +30,12 @@ functions:
     package:
       include:
         - 'kaskadi-stock-report-lambda.js'
+        - 'helpers/**'
     environment:
       ES_ID: ${env:ES_ID}
       ES_SECRET: ${env:ES_SECRET}
       ES_ENDPOINT: ${env:ES_ENDPOINT}
-      NODE_PATH: node_modules:/opt/nodejs:/opt/nodejs/node12/node_modules:/opt/nodejs/node_modules:/var/runtime/node_modules:/var/runtime:/var/task
+      NODE_PATH: /opt/nodejs/utils:/opt/nodejs/node12/node_modules:/opt/nodejs/node_modules:/var/runtime/node_modules:/var/runtime:/var/task
     events:
       - schedule:
           rate: cron(0 7 ? * MON *) # runs every monday at 7AM
