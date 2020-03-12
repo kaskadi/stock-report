@@ -1,7 +1,7 @@
 const searchAllProducts = require('search-all-products.js')
 const buildMsg = require('build-msg.js')
 
-const sendmail = require('sendmail')({silent: true})
+const sendmail = require('sendmail')()
 
 module.exports.handler = async (event) => {
   const dbData = await searchAllProducts()
@@ -10,6 +10,9 @@ module.exports.handler = async (event) => {
     to: 'a.lemaire@klimapartner.de',
     subject: 'Weekly stock report',
     html: buildMsg(dbData)
+  }, function(err, reply) {
+    console.log(err && err.stack)
+    console.dir(reply)
   })
   // const params = {
   //   Message: buildMsg(dbData),
