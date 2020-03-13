@@ -6,7 +6,7 @@ module.exports = (dbData) => {
 }
 
 function getProductData(data) {
-  return `<div style="font-weight: bold; color: chartreuse;">Product data:</div>
+  return `<div style="font-weight: bold; color: darkorange;">Product data:</div>
 <div>ID: ${data._id}</div>
 <div>SKU: ${data._source.sku}</div>
 <div>EAN: ${data._source.ean}</div>
@@ -18,6 +18,6 @@ function getStocks(stocks) {
     ysws: 'YouSellWeSend',
     amz_de: 'Amazon.de'
   }
-  return Object.entries(stocks).map(entry => `<div style="font-weight: bold; color: chartreuse;">${warehouseNamesMap[entry[0]]} stocks:</div>
+  return Object.entries(stocks).map(entry => `<div style="font-weight: bold; color: darkorange;">${warehouseNamesMap[entry[0]]} stocks:</div>
 <div>Quantity: ${entry[1].amount}</div>`).join('')
 }
