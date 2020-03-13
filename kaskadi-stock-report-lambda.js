@@ -1,20 +1,17 @@
-const searchAllProducts = require('search-all-products.js')
-const buildMsg = require('build-msg.js')
-
-const sendmail = require('sendmail')({silent: true})
+const searchAllProducts = require('./helpers/search-all-products.js')
+const buildMsg = require('./helpers/build-msg.js')
+const listRecipients = require('./helpers/list-recipients.js')
+const getWeekNumber = require('./helpers/get-week-number.js')
+const sendEmail = require('./helpers/send-email.js')
 
 module.exports.handler = async (event) => {
   const dbData = await searchAllProducts()
-  sendmail({
-    from: 'no-reply@klimapartner.net',
-    to: 'a.lemaire@klimapartner.de',
-    subject: 'Weekly stock report',
+  const recipients = await listRecipients()
+  const weekN = getWeekNumber(new Date())
+  await sendEmail({
+    from: 'stock-reporter@klimapartner.net',
+    to: recipients,
+    subject: `Weekly stock report - week ${weekN}`,
     html: buildMsg(dbData)
   })
-  // const params = {
-  //   Message: buildMsg(dbData),
-  //   Subject: 'Weekly stock report',
-  //   TopicArn: process.env.TOPIC_ARN
-  // }
-  // await sns.publish(params).promise()
 }

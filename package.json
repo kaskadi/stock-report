@@ -21,6 +21,8 @@
     "url": "https://github.com/kaskadi/kaskadi-stock-report-lambda/issues"
   },
   "homepage": "https://github.com/kaskadi/kaskadi-stock-report-lambda#readme",
-  "devDependencies": {},
-  "dependencies": {}
+  "dependencies": {
+    "aws-es-client": "0.0.2",
+    "sendmail": "^1.6.1"
+  }
 }
