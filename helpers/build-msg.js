@@ -1,12 +1,12 @@
 module.exports = (dbData) => {
-  return dbData.map(data => `<h1>${data._source.name}</h1>
-<div style="padding: 10px 0 5px 0">${getProductData(data)}</div>
-<div style="padding: 5px 0 10px 0">${getStocks(data._source.stocks)}</div>
+  return dbData.map(data => `<h1 style="color: dodgerblue;">${data._source.name}</h1>
+<div style="padding: 10px 0 5px 0;">${getProductData(data)}</div>
+<div style="padding: 5px 0 10px 0;">${getStocks(data._source.stocks)}</div>
 <hr>`).join('')
 }
 
 function getProductData(data) {
-  return `<div style="font-weight: bold;">Product data:</div>
+  return `<div style="font-weight: bold; color: chartreuse;">Product data:</div>
 <div>ID: ${data._id}</div>
 <div>SKU: ${data._source.sku}</div>
 <div>EAN: ${data._source.ean}</div>
@@ -18,6 +18,6 @@ function getStocks(stocks) {
     ysws: 'YouSellWeSend',
     amz_de: 'Amazon.de'
   }
-  return Object.entries(stocks).map(entry => `<div style="font-weight: bold;">${warehouseNamesMap[entry[0]]} stocks:</div>
+  return Object.entries(stocks).map(entry => `<div style="font-weight: bold; color: chartreuse;">${warehouseNamesMap[entry[0]]} stocks:</div>
 <div>Quantity: ${entry[1].amount}</div>`).join('')
 }
