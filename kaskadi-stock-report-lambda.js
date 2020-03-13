@@ -1,7 +1,7 @@
-const searchAllProducts = require('search-all-products.js')
-const buildMsg = require('build-msg.js')
-const listRecipients = require('list-recipients.js')
-const sendEmail = require('send-email.js')
+const searchAllProducts = require('./helpers/search-all-products.js')
+const buildMsg = require('./helpers/build-msg.js')
+const listRecipients = require('./helpers/list-recipients.js')
+const sendEmail = require('./helpers/send-email.js')
 
 module.exports.handler = async (event) => {
   const dbData = await searchAllProducts()

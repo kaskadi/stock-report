@@ -8,7 +8,7 @@ on:
     paths:
       - 'serverless.yml'
       - 'kaskadi-stock-report-lambda.js'
-      - 'layer/**'
+      - 'helpers/**'
 jobs:
   deploy:
     runs-on: ubuntu-latest
