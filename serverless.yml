@@ -4,8 +4,7 @@ service:
 package:
   individually: true
   exclude:
-    - '.*/**'
-    - '*'
+    - '**/**'
 
 provider:
   name: aws
@@ -21,6 +20,19 @@ provider:
     logical-unit: stocks
     type: schedule
 
+layers:
+  KaskadiStockReportLayer:
+    path: layer
+    name: ${self:service.name}-layer
+    description: Layer for ${self:service.name}
+    compatibleRuntimes:
+      - nodejs10.x
+      - nodejs12.x
+    licenseInfo: MIT
+    package:
+      include:
+        - '**/**'
+
 functions:
   KaskadiStockReport:
     handler: kaskadi-stock-report-lambda.handler
@@ -28,8 +40,9 @@ functions:
     package:
       include:
         - 'kaskadi-stock-report-lambda.js'
-        - 'node_modules/**'
         - 'helpers/**'
+    layers:
+      - { Ref: KaskadiStockReportLayerLambdaLayer }
     environment:
       ES_ID: ${env:ES_ID}
       ES_SECRET: ${env:ES_SECRET}

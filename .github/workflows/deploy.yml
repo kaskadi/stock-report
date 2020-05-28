@@ -3,19 +3,23 @@ on:
   push:
     branches:
       - 'master'
-      - 'dev'
       - 'release/**'
     paths:
       - 'serverless.yml'
       - 'kaskadi-stock-report-lambda.js'
       - 'helpers/**'
+      - 'layer/**'
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Install dependencies
+    - name: Install lambda dependencies
       run: npm i
+    - name: Install layer dependencies
+      run: |
+        cd layer/nodejs
+        npm i
     - name: serverless-check
       uses: kaskadi/action-slscli@master
       with:

@@ -8,10 +8,10 @@ module.exports = async () => {
   let from = 0
   const size = 500
   const searchResult = await searchProducts(from, size)
-  let dbData = searchResult.hits.hits
+  let dbData = searchResult.body.hits.hits
   while (from < searchResult.hits.total.value - size) {
     from += size
-    dbData = dbData.concat((await searchProducts(from, size)).hits.hits)
+    dbData = dbData.concat((await searchProducts(from, size)).body.hits.hits)
   }
   return dbData.sort(sortingFunction)
 }

@@ -19,6 +19,6 @@ module.exports = async () => {
       }
     }
   })
-  const recipients = data.hits.hits.map(recipient => recipient._source.email)
+  const recipients = data.body.hits.hits.map(recipient => recipient._source.email)
   return recipients.join(', ')
 }
