@@ -9,7 +9,7 @@ module.exports = async () => {
   const size = 500
   const searchResult = await searchProducts(from, size)
   let dbData = searchResult.body.hits.hits
-  while (from < searchResult.hits.total.value - size) {
+  while (from < searchResult.body.hits.total.value - size) {
     from += size
     dbData = dbData.concat((await searchProducts(from, size)).body.hits.hits)
   }
