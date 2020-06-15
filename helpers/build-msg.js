@@ -42,7 +42,7 @@ function getStocksData(stocks) {
     ${entry[1].stockData.map(data => `<tr>
       <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; text-align: center;">${data.id}</td>
       <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; text-align: center;">${data.quantity}</td>
-      <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; text-align: center;">${data.condition}</td>
+      <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; text-align: center;">${data.condition || 'no data'}</td>
     </tr>`).join('')}
   </table>
 </div>`).join('')
