@@ -30,6 +30,7 @@ function sortingFunction(a, b) {
 
 function searchProducts(from, size) {
   return es.search({
+    index: 'products',
     from,
     size,
     body: {
