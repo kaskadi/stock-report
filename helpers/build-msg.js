@@ -32,11 +32,16 @@ function getStocksData(stocks) {
     amz_cn: 'Amazon CN'
   }
   return Object.entries(stocks).map(entry => `<div style="font-weight: bold; color: darkorange;">${warehouseNamesMap[entry[0]]} stocks:</div>
-<ul>
-  ${entry[1].stockData.map(data => `<li>
-    <div>${entry[0].toUpperCase()}: ${data.id}</div>
-    <div>Quantity: ${data.quantity}</div>
-    <div>Condition: ${data.condition || 'no data'}</div>
-  </li>`).join('')}
-</ul>`).join('')
+<table style="border: 1px solid black; border-collapse: collapse;">
+  <tr>
+    <th style="border: 1px solid black; border-collapse: collapse;">${entry[1].idType.toUpperCase()}</th>
+    <th style="border: 1px solid black; border-collapse: collapse;">Quantity</th>
+    <th style="border: 1px solid black; border-collapse: collapse;">Condition</th>
+  </tr>
+  ${entry[1].stockData.map(data => `<tr>
+    <td style="border: 1px solid black; border-collapse: collapse;">${data.id}</td>
+    <td style="border: 1px solid black; border-collapse: collapse;">${data.quantity}</td>
+    <td style="border: 1px solid black; border-collapse: collapse;">${data.condition}</td>
+  </tr>`).join('')}
+</table>`).join('')
 }
