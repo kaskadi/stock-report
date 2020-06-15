@@ -6,7 +6,9 @@ module.exports = (dbData) => {
 }
 
 function getProductData(data) {
-  return `<div style="font-weight: bold; color: darkorange;">Product data:</div>
+  return `<div>
+  <h2 style="color: darkorange;">Product data:</h2>
+</div>
 <div>ID: ${data._id}</div>
 <div>SKU: ${data._source.sku}</div>
 <div>EAN: ${data._source.ean}</div>
@@ -31,17 +33,19 @@ function getStocksData(stocks) {
     amz_tr: 'Amazon TR',
     amz_cn: 'Amazon CN'
   }
-  return Object.entries(stocks).map(entry => `<div style="font-weight: bold; color: darkorange;">${warehouseNamesMap[entry[0]]} stocks:</div>
+  return Object.entries(stocks).map(entry => `<div>
+  <h2 style="color: darkorange;">${warehouseNamesMap[entry[0]]} stocks:</h2>
+</div>
 <table style="border: 1px solid black; border-collapse: collapse;">
   <tr>
-    <th style="border: 1px solid black; border-collapse: collapse;">${entry[1].idType.toUpperCase()}</th>
-    <th style="border: 1px solid black; border-collapse: collapse;">Quantity</th>
-    <th style="border: 1px solid black; border-collapse: collapse;">Condition</th>
+    <th style="border: 1px solid black; border-collapse: collapse; padding: 0 10px;">${entry[1].idType.toUpperCase()}</th>
+    <th style="border: 1px solid black; border-collapse: collapse; padding: 0 10px;">Quantity</th>
+    <th style="border: 1px solid black; border-collapse: collapse; padding: 0 10px;">Condition</th>
   </tr>
   ${entry[1].stockData.map(data => `<tr>
-    <td style="border: 1px solid black; border-collapse: collapse;">${data.id}</td>
-    <td style="border: 1px solid black; border-collapse: collapse;">${data.quantity}</td>
-    <td style="border: 1px solid black; border-collapse: collapse;">${data.condition}</td>
+    <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; align-text: center;">${data.id}</td>
+    <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; align-text: center;">${data.quantity}</td>
+    <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; align-text: center;">${data.condition}</td>
   </tr>`).join('')}
 </table>`).join('')
 }
