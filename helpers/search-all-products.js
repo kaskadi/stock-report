@@ -28,8 +28,8 @@ function sortingFunction(a, b) {
   return 0
 }
 
-async function searchProducts(from, size) {
-  return await es.search({
+function searchProducts(from, size) {
+  return es.search({
     from,
     size,
     body: {
