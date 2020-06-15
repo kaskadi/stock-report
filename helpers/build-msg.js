@@ -7,7 +7,7 @@ module.exports = (dbData) => {
 
 function getProductData(data) {
   return `<div>
-  <h2 style="color: darkorange;">Product data:</h2>
+  <h2 style="color: darkorange; margin: 0;">Product data:</h2>
 </div>
 <div>ID: ${data._id}</div>
 <div>SKU: ${data._source.sku}</div>
@@ -34,7 +34,7 @@ function getStocksData(stocks) {
     amz_cn: 'Amazon CN'
   }
   return Object.entries(stocks).map(entry => `<div>
-  <h2 style="color: darkorange;">${warehouseNamesMap[entry[0]]} stocks:</h2>
+  <h2 style="color: darkorange; margin: 0;">${warehouseNamesMap[entry[0]]} stocks:</h2>
 </div>
 <table style="border: 1px solid black; border-collapse: collapse;">
   <tr>
@@ -43,9 +43,9 @@ function getStocksData(stocks) {
     <th style="border: 1px solid black; border-collapse: collapse; padding: 0 10px;">Condition</th>
   </tr>
   ${entry[1].stockData.map(data => `<tr>
-    <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; align-text: center;">${data.id}</td>
-    <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; align-text: center;">${data.quantity}</td>
-    <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; align-text: center;">${data.condition}</td>
+    <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; text-align: center;">${data.id}</td>
+    <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; text-align: center;">${data.quantity}</td>
+    <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; text-align: center;">${data.condition}</td>
   </tr>`).join('')}
 </table>`).join('')
 }
