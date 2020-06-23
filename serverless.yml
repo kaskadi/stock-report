@@ -1,5 +1,5 @@
 service:
-  name: kaskadi-stock-report-lambda
+  name: stock-report
 
 package:
   individually: true
@@ -14,6 +14,8 @@ provider:
   region: eu-central-1
   deploymentBucket:
     name: kaskadi-serverless-deployment-bucket
+  stackTags:
+    app: kaskadi
   tags:
     app: kaskadi
     service: ${self:service.name}
@@ -21,7 +23,7 @@ provider:
     type: schedule
 
 layers:
-  KaskadiStockReportLayer:
+  StockReportLayer:
     path: layer
     name: ${self:service.name}-layer
     description: Layer for ${self:service.name}
@@ -34,15 +36,15 @@ layers:
         - '**/**'
 
 functions:
-  KaskadiStockReport:
-    handler: kaskadi-stock-report-lambda.handler
+  StockReport:
+    handler: stock-report.handler
     name: ${self:service.name}
     package:
       include:
-        - 'kaskadi-stock-report-lambda.js'
+        - 'stock-report.js'
         - 'helpers/**'
     layers:
-      - { Ref: KaskadiStockReportLayerLambdaLayer }
+      - { Ref: StockReportLayerLambdaLayer }
     environment:
       ES_ID: ${env:ES_ID}
       ES_SECRET: ${env:ES_SECRET}

@@ -6,7 +6,7 @@ on:
       - 'release/**'
     paths:
       - 'serverless.yml'
-      - 'kaskadi-stock-report-lambda.js'
+      - 'stock-report.js'
       - 'helpers/**'
       - 'layer/**'
 jobs:

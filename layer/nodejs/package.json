@@ -1,7 +1,7 @@
 {
-  "name": "kaskadi-stock-report-lambda-layer",
+  "name": "stock-report-layer",
   "version": "1.0.0",
-  "description": "Layer for kaskadi-stock-report-lambda",
+  "description": "Layer for stock-report",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
