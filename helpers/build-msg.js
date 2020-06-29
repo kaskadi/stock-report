@@ -15,7 +15,6 @@ function getProductData(data) {
 
 function getStocksData(stocks) {
   const warehouseNamesMap = {
-    ysws: 'YouSellWeSend',
     amz_de: 'Amazon DE',
     amz_gb: 'Amazon GB',
     amz_fr: 'Amazon FR',
@@ -35,15 +34,17 @@ function getStocksData(stocks) {
   <h2 style="color: darkorange; margin: 0;">${warehouseNamesMap[entry[0]]} stocks:</h2>
   <table style="border: 1px solid black; border-collapse: collapse;">
     <tr>
-      <th style="border: 1px solid black; border-collapse: collapse; padding: 0 10px;">${entry[1].idType.toUpperCase()}</th>
+      <th style="border: 1px solid black; border-collapse: collapse; padding: 0 10px;">SellerSKU</th>
       <th style="border: 1px solid black; border-collapse: collapse; padding: 0 10px;">Quantity</th>
       <th style="border: 1px solid black; border-collapse: collapse; padding: 0 10px;">Condition</th>
+      <th style="border: 1px solid black; border-collapse: collapse; padding: 0 10px;">Fulfillment channel</th>
     </tr>
-    ${entry[1].stockData.map(data => `<tr>
-      <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; text-align: center;">${data.id}</td>
+    ${entry[1].flatMap(asinData => asinData.stockData.flatMap(data => `<tr>
+      <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; text-align: center;">${data.sellerSku}</td>
       <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; text-align: center;">${data.quantity}</td>
       <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; text-align: center;">${data.condition || 'no data'}</td>
-    </tr>`).join('')}
+      <td style="border: 1px solid black; border-collapse: collapse; padding: 0 10px; text-align: center;">${data.fulfilmentChannel}</td>
+    </tr>`)).join('')}
   </table>
 </div>`).join('')
 }
