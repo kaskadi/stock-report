@@ -14,22 +14,8 @@ function getProductData(data) {
 }
 
 function getStocksData(stocks) {
-  const warehouseNamesMap = {
-    amz_de: 'Amazon DE',
-    amz_gb: 'Amazon GB',
-    amz_fr: 'Amazon FR',
-    amz_es: 'Amazon ES',
-    amz_it: 'Amazon IT',
-    amz_ca: 'Amazon CA',
-    amz_mx: 'Amazon MX',
-    amz_us: 'Amazon US',
-    amz_au: 'Amazon AU',
-    amz_jp: 'Amazon JP',
-    amz_ae: 'Amazon AE',
-    amz_in: 'Amazon IN',
-    amz_tr: 'Amazon TR',
-    amz_cn: 'Amazon CN'
-  }
+  const countryCodes = ['DE', 'GB', 'FR', 'ES', 'IT', 'CA', 'MX', 'US', 'AU', 'JP', 'AE', 'IN', 'TR', 'CN']
+  const warehouseNamesMap = Object.fromEntries(countryCodes.map(countryCode => [`amz_${countryCode.toLowerCase()}`, `Amazon ${countryCode}`]))
   return Object.entries(stocks).map(entry => `<div style="padding-bottom: 10px;">
   <h2 style="color: darkorange; margin: 0;">${warehouseNamesMap[entry[0]]} stocks:</h2>
   <table style="border: 1px solid black; border-collapse: collapse;">

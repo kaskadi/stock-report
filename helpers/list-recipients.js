@@ -1,11 +1,5 @@
-const es = require('aws-es-client')({
-  id: process.env.ES_ID,
-  token: process.env.ES_SECRET,
-  url: process.env.ES_ENDPOINT
-})
-
-module.exports = async () => {
-  const data = await es.search({
+module.exports = async (esClient) => {
+  const data = await esClient.search({
     from: 0,
     size: 500,
     body: {

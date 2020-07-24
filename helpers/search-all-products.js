@@ -1,17 +1,11 @@
-const es = require('aws-es-client')({
-  id: process.env.ES_ID,
-  token: process.env.ES_SECRET,
-  url: process.env.ES_ENDPOINT
-})
-
-module.exports = async () => {
+module.exports = async (esClient) => {
   let from = 0
   const size = 500
-  const searchResult = await searchProducts(from, size)
+  const searchResult = await searchProducts(esClient, from, size)
   let dbData = searchResult.body.hits.hits
   while (from < searchResult.body.hits.total.value - size) {
     from += size
-    dbData = dbData.concat((await searchProducts(from, size)).body.hits.hits)
+    dbData = dbData.concat((await searchProducts(esClient, from, size)).body.hits.hits)
   }
   return dbData.sort(sortingFunction)
 }
@@ -28,8 +22,8 @@ function sortingFunction(a, b) {
   return 0
 }
 
-function searchProducts(from, size) {
-  return es.search({
+function searchProducts(esClient, from, size) {
+  return esClient.search({
     index: 'products',
     from,
     size,
