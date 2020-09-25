@@ -18,8 +18,39 @@
 
 [![](https://img.shields.io/lgtm/grade/javascript/github/kaskadi/stock-report?label=code%20quality&logo=LGTM)](https://lgtm.com/projects/g/kaskadi/stock-report/?mode=list&logo=LGTM)
 
-:point_right: **Badges here** :point_left:
+<!-- You can add badges inside of this section if you'd like -->
 
 ****
 
-:point_down: **Your documentation here** :point_down:
+<!-- automatically generated documentation will be placed in here -->
+# Resources documentation
+
+The following lambda functions are defined in this repository:
+- [stock-report](#stock-report)
+
+The following layers are defined in this repository:
+- [stock-report-layer](#stock-report-layer)
+
+## stock-report <a name="stock-report"></a>
+
+|     Name     | Sources                    | Timeout |            Handler           | Layers                                                      |
+| :----------: | :------------------------- | :-----: | :--------------------------: | :---------------------------------------------------------- |
+| stock-report | <ul><li>SCHEDULE</li></ul> | default | [handler](./stock-report.js) | <ul><li>[stock-report-layer](#stock-report-layer)</li></ul> |
+
+See [configuration file](./serverless.yml) for more details.
+
+## stock-report-layer <a name="stock-report-layer"></a>
+
+### Description
+
+Layer for stock-report
+
+### Dependencies
+
+- `aws-es-client`, version: `^1.0.1` ([see on NPM](https://www.npmjs.com/package/aws-es-client))
+- `sendmail`, version: `^1.6.1` ([see on NPM](https://www.npmjs.com/package/sendmail))
+
+See [configuration file](./serverless.yml) for more details.
+<!-- automatically generated documentation will be placed in here -->
+
+<!-- You can customize this template as you'd like! -->
