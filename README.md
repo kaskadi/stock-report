@@ -51,6 +51,17 @@ Layer for stock-report
 - `sendmail`, version: `^1.6.1` ([see on NPM](https://www.npmjs.com/package/sendmail))
 
 See [configuration file](./serverless.yml) for more details.
+
+# Stack tags
+
+You can use any tags (and their respective values) visible below to find ressources related to this stack on AWS. See [here](https://docs.amazonaws.cn/en_us/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html) for more details.
+
+| Tag          | Value        |
+| :----------- | :----------- |
+| app          | kaskadi      |
+| service      | stock-report |
+| logical-unit | stocks       |
+| type         | schedule     |
 <!-- automatically generated documentation will be placed in here -->
 
 <!-- You can customize this template as you'd like! -->
