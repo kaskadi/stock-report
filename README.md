@@ -47,8 +47,8 @@ Layer for stock-report
 
 ### Dependencies
 
-- `aws-es-client`, version: `^1.0.1` ([see on NPM](https://www.npmjs.com/package/aws-es-client))
-- `sendmail`, version: `^1.6.1` ([see on NPM](https://www.npmjs.com/package/sendmail))
+- `aws-es-client`, version: `1.0.1` ([see on NPM](https://www.npmjs.com/package/aws-es-client))
+- `sendmail`, version: `1.6.1` ([see on NPM](https://www.npmjs.com/package/sendmail))
 
 See [configuration file](./serverless.yml) for more details.
 
