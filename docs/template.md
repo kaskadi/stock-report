@@ -6,7 +6,6 @@
 
 [![Deploy status](https://img.shields.io/github/workflow/status/kaskadi/stock-report/deploy?label=deployed&logo=Amazon%20AWS)](https://github.com/kaskadi/stock-report/actions?query=workflow%3Adeploy)
 [![Build status](https://img.shields.io/github/workflow/status/kaskadi/stock-report/build?label=build&logo=mocha)](https://github.com/kaskadi/stock-report/actions?query=workflow%3Abuild)
-[![Syntax check status](https://img.shields.io/github/workflow/status/kaskadi/stock-report/syntax-check?label=syntax-check&logo=serverless)](https://github.com/kaskadi/stock-report/actions?query=workflow%3Asyntax-check)
 [![Docs generation status](https://img.shields.io/github/workflow/status/kaskadi/stock-report/generate-docs?label=docs&logo=read-the-docs)](https://github.com/kaskadi/stock-report/actions?query=workflow%3Agenerate-docs)
 
 **CodeClimate**
